@@ -1,19 +1,22 @@
 // Kargo Assessment
 
 var str = "";
+var invalid = false; // flag indicating whether input is valid
 
-for (i = 2; i < process.argv.length; i++) 
+for (i = 2; i < process.argv.length; i++) // loops through command line arguments
 {
+    if (invalid) {break;}
     if (i > 2) {str = str+","}
     
-    for (j = 0; j < process.argv[i].length; j++) 
+    for (j = 0; j < process.argv[i].length; j++) // checks each character of argument string
     {
+	if (invalid) {break;}
 	switch(process.argv[i].charAt(j))
 	{
 	    case '0':
 	        str = str+"Zero";
 	        break;
-	    case '1':
+            case '1':
 	        str = str+"One";
 	        break;
 	    case '2':
@@ -40,8 +43,12 @@ for (i = 2; i < process.argv.length; i++)
 	    case '9':
 	        str = str+"Nine";
 	        break;
+	    default:
+	        invalid = true; // case where character is not an integer
+	        break;
 	}
     }
 }
 
-process.stdout.write(str+"\n");
+if (invalid) {process.stdout.write("Invalid input. All arguments must be positive integers."+"\n");}
+else {process.stdout.write(str+"\n");}
